@@ -29,11 +29,17 @@ resultsDiv.className = 'gcse-searchresults-only';
 
 let sidebar  = document.createElement('div');
 sidebar.id = 'sidebarContainer';
-sidebar.style.position = 'absolute';
-sidebar.style.right = '8%';
-sidebar.style.top = '0%';
-sidebar.style.width = '30%'
-sidebar.style.height = '30%';
+
+
+sidebar.style.cssText = ' float:left;\n' +
+    ' min-width:268px;\n' +
+    ' display:block;\n' +
+    ' position:relative;\n' +
+    ' padding-bottom:15px;\n' +
+    ' margin-left:892px;\n' +
+    ' padding-right:8px';
+
+
 
 sidebar.appendChild(resultsDiv);
 
@@ -41,10 +47,12 @@ sidebar.appendChild(resultsDiv);
 let rhs = document.getElementById('rhs');
 let mainDiv = document.getElementById('rcnt');
 
+
+
 if (rhs) {
     console.log("RHS exists, inserting as display: none.");
     sidebar.style.display = 'none';
-    mainDiv.appendChild(sidebar);
+    mainDiv.insertBefore(sidebar,rhs);
 } else {
     console.log("RHS doesn't exist, inserting as display:block");
     mainDiv.appendChild(sidebar);
