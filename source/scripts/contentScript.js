@@ -38,14 +38,19 @@ sidebar.appendChild(resultsDiv);
 let rhs = document.getElementById('rhs');
 let mainDiv = document.getElementById('rcnt');
 
+
+
 if (rhs) {
     console.log("RHS exists, inserting as display: none.");
     sidebar.style.display = 'none';
     mainDiv.insertBefore(sidebar,rhs);
 } else {
     console.log("RHS doesn't exist, inserting as display:block");
-    mainDiv.appendChild(sidebar);
+    // mainDiv.appendChild(sidebar);
+    mainDiv.insertBefore(sidebar,mainDiv.childNodes[1]);
 }
+
+
 
 
 function toggleSidebar() {
