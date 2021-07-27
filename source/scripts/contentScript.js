@@ -1,17 +1,27 @@
-// Adds Script to DOM
-import './jquery-3.6.0.min'
-let script = document.createElement("script");
-script.type = 'text/javascript';
-script.async = true;
-script.src = "https://cse.google.com/cse.js?cx=20929241749f9dd83";
 
-let s = document.getElementsByTagName('script')[0];
-s.parentNode.insertBefore(script, s);
+// Adds Script to DOM
+function reload_GoogleScript() {
+    console.log("Reloading Google Script");
+    // Remove script if exists currently
+    let existingScript = document.getElementById('engineScript');
+    if (typeof(existingScript) != 'undefined' && existingScript != null) existingScript.remove();
+
+    // Add Script
+    let engineURL = "https://cse.google.com/cse.js?cx=20929241749f9dd83";
+    let script = document.createElement("script");
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = engineURL;
+    let s = document.getElementsByTagName('head')[0];
+    s.parentNode.insertBefore(script, s);
+}
+
 
 
 let defaultSite = "https://reddit.com";
-// let selectedSite = defaultSite;
+let currentSite = defaultSite;
 
+reload_GoogleScript();
 
 //    Create Reddit results div
 let redditBtn = document.createElement("div");
@@ -85,21 +95,36 @@ if (rhs) {
 }
 
 
+
 function toggleSidebar(selectedSite) {
-    console.log(selectedSite);
-    // resultsDiv.setAttribute('data-as_sitesearch', selectedSite);
-    // resultsDiv.reload();
-    console.log("I think i loaded JQuery!");
-    if (sidebar.style.display === "none") {
-        if(rhs) {
-            rhs.style.display = 'none';
+    if(selectedSite === currentSite) {
+        if(sidebar.style.display === 'none') {
+            if (rhs) rhs.style.display = 'none';
+            sidebar.style.display = "block";
+        } else {
+            sidebar.style.display = "none";
+            if (rhs) rhs.style.display = 'block';
         }
-        sidebar.style.display = "block";
     } else {
-        if(rhs) {
-            rhs.style.display = 'block';
+        currentSite = selectedSite;
+        regenerateResults(selectedSite);
+        if(sidebar.style.display === 'none') {
+            if (rhs) rhs.style.display = 'none';
+            sidebar.style.display = 'block';
         }
-        sidebar.style.display = "none";
     }
 }
 
+function regenerateResults(selectedSite) {
+    console.log(selectedSite);
+
+    document.getElementById('resultDiv').remove();
+
+    let newResultDiv = document.createElement("div");
+    newResultDiv.setAttribute('data-as_sitesearch', selectedSite);
+    newResultDiv.className = 'gcse-searchresults-only';
+    newResultDiv.id = 'resultDiv';
+
+    document.getElementById('sidebarContainer').appendChild(newResultDiv);
+    reload_GoogleScript();
+}
