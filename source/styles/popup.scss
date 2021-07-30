@@ -51,7 +51,7 @@ h2 {
   padding: 80px 20px;
 }
 
-.svgContainer {
+.minusIconContainer {
   display: flex;
   align-items: stretch;
 }
@@ -75,10 +75,13 @@ h2 {
 }
 
 button {
-  width: 50%;
+  width: 25%;
   margin-left: auto;
   margin-right: auto;
-  background-color: mediumpurple;
+  background-color: dodgerblue;
+  border-radius: 10px;
+  height: 8vh;
+  color: white;
 
 }
 

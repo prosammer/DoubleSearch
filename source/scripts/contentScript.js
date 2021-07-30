@@ -92,7 +92,6 @@ if (rhs) {
 }
 
 
-
 function toggleSidebar(selectedSite) {
     if(selectedSite === currentSite) {
         if(sidebar.style.display === 'none') {

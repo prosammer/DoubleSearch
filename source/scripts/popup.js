@@ -43,19 +43,22 @@ class Engine {
     constructor(name,URL) {
         this.name = name;
         this.URL = URL;
+
         this.engineDiv = document.createElement('div');
         this.engineDiv.setAttribute('class','engineDiv');
 
-        this.svgContainer = document.createElement('div');
-        this.svgContainer.setAttribute('onclick','removeEngine()');
-        this.svgContainer.setAttribute('class','svgContainer');
-        this.engineDiv.appendChild(this.svgContainer);
+        this.minusIconContainer = document.createElement('div');
+        this.minusIconContainer.setAttribute('onclick','removeEngine()');
+        this.minusIconContainer.setAttribute('class','minusIconContainer');
+
+
+        this.minusIconContainer.addEventListener('click', function () {deleteEngineFromArray(URL)});
+        this.engineDiv.appendChild(this.minusIconContainer);
 
         this.minusIcon = document.createElement('span');
         this.minusIcon.innerHTML = '&#8854;';
-
-        this.svgContainer.appendChild(this.minusIcon);
-
+        this.minusIcon.style.fontSize = '4vh';
+        this.minusIconContainer.appendChild(this.minusIcon);
 
         this.nameInput = document.createElement('input');
         this.nameInput.setAttribute('type','text');
@@ -79,16 +82,20 @@ class Engine {
     }
 }
 
-const engineList = [new Engine('Reddit','https://reddit.com'), new Engine('StackOverflow', 'https://stackoverflow.com'), new Engine('Hacker News', 'https://news.ycombinator.com')];
+let engineList = [new Engine('Reddit','https://reddit.com'), new Engine('StackOverflow', 'https://stackoverflow.com'), new Engine('Hacker News', 'https://news.ycombinator.com')];
+
+let main = document.getElementsByTagName('main')[0];
 
 let form = document.getElementById('popup');
-for (let i = 0; i < engineList.length; i++) {
-    form.appendChild(engineList[i].engineElement);
-}
+let formPlaceholder = document.createElement('div');
+form.appendChild(formPlaceholder);
+
+regenerateEngineArrayDivs();
+
 
 let addButtonContainer = document.createElement('div');
-addButtonContainer.id = 'addButtonContainer'
-form.appendChild(addButtonContainer);
+addButtonContainer.id = 'addButtonContainer';
+main.appendChild(addButtonContainer);
 
 let buttonSpacer = document.createElement('div');
 buttonSpacer.id = 'buttonSpacer';
@@ -97,24 +104,50 @@ addButtonContainer.appendChild(buttonSpacer);
 let addButtonIcon = document.createElement('span');
 addButtonIcon.innerHTML = '&#8853;';
 addButtonIcon.style.fontSize = '5vh';
+addButtonIcon.addEventListener('click', addEngineToArray);
 
 addButtonContainer.appendChild(addButtonIcon);
+
+let saveButtonContainer = document.createElement('div');
+saveButtonContainer.style.display = 'flex';
+
 
 let saveButton = document.createElement('button');
 saveButton.setAttribute('type', 'submit');
 saveButton.setAttribute('value', 'Submit');
 saveButton.style.alignSelf = 'center';
 saveButton.innerHTML = 'Save';
-form.appendChild(saveButton);
+saveButton.onclick = function() {
 
-let minusIcons =  document.getElementsByClassName('svgContainer');
-
-// for (let i = 0; i < minusIcons.length; i++) {
-//     let name =
-//     // minusIcons[i].addEventListener('click', () => {engineList = engineList.filter()pop(i)});
-// }
-
-function updateArray() {
-    document.getElementById('options__button').remove();
-    return false;
 }
+saveButtonContainer.appendChild(saveButton);
+
+main.appendChild(saveButtonContainer);
+
+function addEngineToArray() {
+    engineList.push(new Engine('Name Here', 'www.example.com'));
+    regenerateEngineArrayDivs();
+}
+
+function deleteEngineFromArray(URL) {
+    console.log(URL);
+    console.log('Removing URL:' + URL + 'from enginearray');
+
+    for (let i = 0; i < engineList.length; i++) {
+        if(engineList[i].URL == URL) {
+            console.log('Found engine by id, deleting');
+            engineList.splice(i,1);
+        }
+    }
+    console.log(engineList);
+    regenerateEngineArrayDivs();
+}
+
+function regenerateEngineArrayDivs() {
+    form.innerHTML = '';
+    for (let i = 0; i < engineList.length; i++) {
+        form.appendChild(engineList[i].engineElement);
+    }
+    console.log(engineList);
+}
+
