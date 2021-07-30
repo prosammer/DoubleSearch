@@ -41,7 +41,7 @@ h2 {
   flex-grow: 2;
 }
 
-.urlInput {
+.URLInput {
   width: 60%;
 }
 
@@ -49,22 +49,6 @@ h2 {
 #popup {
   min-width: 500px;
   padding: 80px 20px;
-}
-
-.svg-icon {
-  width: 1.5em;
-  height: 1.5em;
-}
-
-.svg-icon path,
-.svg-icon polygon,
-.svg-icon rect {
-  fill: #4691f6;
-}
-
-.svg-icon circle {
-  stroke: #4691f6;
-  stroke-width: 1;
 }
 
 .svgContainer {
@@ -78,7 +62,7 @@ h2 {
   display: block;
 }
 
-#plusButtonContainer {
+#addButtonContainer {
   display: flex;
   padding-top: 1vh;
 }
@@ -88,6 +72,14 @@ h2 {
 
 #plusButton {
   align-self: end;
+}
+
+button {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: mediumpurple;
+
 }
 
 

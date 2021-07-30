@@ -28,7 +28,6 @@ let redditBtn = document.createElement("div");
 redditBtn.id = 'redditBtn';
 redditBtn.innerHTML = 'Reddit';
 redditBtn.style.paddingLeft = '163px';
-// redditBtn.addEventListener("click", toggleSidebar("https://reddit.com"));
 redditBtn.addEventListener("click", function() {
     toggleSidebar("https://reddit.com");
 });
@@ -38,7 +37,6 @@ let soBtn = document.createElement("div");
 soBtn.id = 'soBtn';
 soBtn.innerHTML = "StackOverflow";
 soBtn.style.paddingLeft = '12px';
-// soBtn.addEventListener("click", toggleSidebar("https://stackoverflow.com"));
 soBtn.addEventListener("click", function() {
     toggleSidebar("https://stackoverflow.com");
 });
@@ -48,7 +46,6 @@ let hnBtn = document.createElement("div");
 hnBtn.id = 'hnBtn';
 hnBtn.innerHTML = "HackerNews";
 hnBtn.style.paddingLeft = '12px';
-// hnBtn.addEventListener("click", toggleSidebar("https://news.ycombinator.com"));
 hnBtn.addEventListener("click", function() {
     toggleSidebar("https://news.ycombinator.com");
 });
