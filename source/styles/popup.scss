@@ -7,46 +7,90 @@ body {
   background-color: $greyWhite;
 }
 
-#popup {
-  min-width: 350px;
-  padding: 30px 20px;
-
-  h2 {
-    font-size: 25px;
-    text-align: center;
-  }
-
-  #options__button {
-    width: 50%;
-    background: green;
-    color: white;
-    font-weight: 500;
-    border-radius: 15px;
-    padding: 5px 10px;
-    justify-content: center;
-    margin: 20px auto;
-    cursor: pointer;
-    opacity: 0.8;
-    display: flex;
-  }
-
-  .links__holder {
-    ul {
-      display: flex;
-      margin-top: 1em;
-      justify-content: space-around;
-
-      li {
-        button {
-          border-radius: 25px;
-          font-size: 20px;
-          font-weight: 600;
-          padding: 10px 17px;
-          background-color: rgba(0, 0, 255, 0.7);
-          color: white;
-          cursor: pointer;
-        }
-      }
-    }
-  }
+h2 {
+  font-size: 25px;
+  text-align: center;
 }
+
+
+#options__button {
+  width: 50%;
+  background: green;
+  color: white;
+  font-weight: 500;
+  border-radius: 15px;
+  padding: 5px 10px;
+  justify-content: center;
+  margin: 20px auto;
+  cursor: pointer;
+  opacity: 0.8;
+  display: flex;
+}
+
+
+
+.engineInput {
+  padding: 3px 10px;
+  line-height: 30px;
+  margin: 3px;
+}
+
+.engineDiv {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 2;
+}
+
+.urlInput {
+  width: 60%;
+}
+
+
+#popup {
+  min-width: 500px;
+  padding: 80px 20px;
+}
+
+.svg-icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #4691f6;
+}
+
+.svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
+}
+
+.svgContainer {
+  display: flex;
+  align-items: stretch;
+}
+
+.minusButton {
+  margin-top: auto;
+  margin-bottom: auto;
+  display: block;
+}
+
+#plusButtonContainer {
+  display: flex;
+  padding-top: 1vh;
+}
+#buttonSpacer {
+  flex-grow: 2;
+}
+
+#plusButton {
+  align-self: end;
+}
+
+
+
+
+

@@ -1,38 +1,38 @@
-import 'emoji-log';
-import browser from 'webextension-polyfill';
-
 import '../styles/popup.scss';
 
-function openWebPage(url) {
-  return browser.tabs.create({url});
+/**
+ * Temporary workaround for secondary monitors on MacOS where redraws don't happen
+ * @See https://bugs.chromium.org/p/chromium/issues/detail?id=971701
+ */
+if (
+    // From testing the following conditions seem to indicate that the popup was opened on a secondary monitor
+    window.screenLeft < 0 ||
+    window.screenTop < 0 ||
+    window.screenLeft > window.screen.width ||
+    window.screenTop > window.screen.height
+) {
+    chrome.runtime.getPlatformInfo(function (info) {
+        if (info.os === 'mac') {
+            const fontFaceSheet = new CSSStyleSheet()
+            fontFaceSheet.insertRule(`
+        @keyframes redraw {
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: .99;
+          }
+        }
+      `)
+            fontFaceSheet.insertRule(`
+        html {
+          animation: redraw 1s linear infinite;
+        }
+      `)
+            document.adoptedStyleSheets = [
+                ...document.adoptedStyleSheets,
+                fontFaceSheet,
+            ]
+        }
+    })
 }
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const tabs = await browser.tabs.query({
-    active: true,
-    lastFocusedWindow: true,
-  });
-
-  const url = tabs.length && tabs[0].url;
-
-  const response = await browser.runtime.sendMessage({
-    msg: 'hello',
-    url,
-  });
-
-  console.emoji('🦄', response);
-
-  document.getElementById('github__button').addEventListener('click', () => {
-    return openWebPage(
-      'https://github.com/abhijithvijayan/web-extension-starter'
-    );
-  });
-
-  document.getElementById('donate__button').addEventListener('click', () => {
-    return openWebPage('https://www.buymeacoffee.com/abhijithvijayan');
-  });
-
-  document.getElementById('options__button').addEventListener('click', () => {
-    return openWebPage('options.html');
-  });
-});
