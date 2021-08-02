@@ -47,10 +47,7 @@ class Engine {
         this.engineDiv.setAttribute('class','engineDiv');
 
         this.minusIconContainer = document.createElement('div');
-        // this.minusIconContainer.setAttribute('onclick','removeEngine()');
         this.minusIconContainer.setAttribute('class','minusIconContainer');
-
-
         this.minusIconContainer.addEventListener('click', function () {deleteEngineFromArray(engineName)});
         this.engineDiv.appendChild(this.minusIconContainer);
 
@@ -76,12 +73,6 @@ class Engine {
         this.engineDiv.appendChild(this.URLInput);
 
     }
-    get getengineName() {
-        return this.engineName;
-    }
-    get getengineURL() {
-        return this.engineURL;
-    }
     get engineElement() {
         return this.engineDiv;
     }
@@ -95,7 +86,7 @@ function saveOptions() {
     });
 }
 
-function restoreOptions() {
+function restoreEngineOptions() {
 
     function setEnginesList(result) {
         result = result.savedEngines;
@@ -188,6 +179,5 @@ let engineList = [
     ['HackerNews', 'https://news.ycombinator.com']
 ]
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
-// document.querySelector("#popup").addEventListener("submit", saveOptions);
+document.addEventListener("DOMContentLoaded", restoreEngineOptions);
 addOtherElements();

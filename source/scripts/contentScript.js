@@ -16,80 +16,28 @@ function reload_GoogleScript() {
     s.parentNode.insertBefore(script, s);
 }
 
+function createSidebar() {
 
+//  Create Sidebar
+    let resultsDiv = document.createElement("div");
+    resultsDiv.setAttribute('data-as_sitesearch', defaultSite);
+    resultsDiv.className = 'gcse-searchresults-only';
+    resultsDiv.id = 'resultDiv';
 
-let defaultSite = "https://reddit.com";
-let currentSite = defaultSite;
+    sidebar.id = 'sidebarContainer';
+    sidebar.style.cssText = ' float:left;\n' +
+        ' min-width:268px;\n' +
+        ' display:block;\n' +
+        ' position:relative;\n' +
+        ' padding-bottom:15px;\n' +
+        ' margin-left:892px;\n' +
+        ' padding-right:10px';
 
-reload_GoogleScript();
+    sidebar.appendChild(resultsDiv);
+}
 
-let redditBtn = document.createElement("div");
-redditBtn.id = 'redditBtn';
-redditBtn.innerHTML = 'Reddit';
-redditBtn.style.paddingLeft = '163px';
-redditBtn.addEventListener("click", function() {
-    toggleSidebar("https://reddit.com");
-});
-
-let soBtn = document.createElement("div");
-soBtn.id = 'soBtn';
-soBtn.innerHTML = "StackOverflow";
-soBtn.style.paddingLeft = '12px';
-soBtn.addEventListener("click", function() {
-    toggleSidebar("https://stackoverflow.com");
-});
-
-let hnBtn = document.createElement("div");
-hnBtn.id = 'hnBtn';
-hnBtn.innerHTML = "HackerNews";
-hnBtn.style.paddingLeft = '12px';
-hnBtn.addEventListener("click", function() {
-    toggleSidebar("https://news.ycombinator.com");
-});
-
-
-
-let toolbar = document.getElementById('hdtb-msb');
-toolbar.appendChild(redditBtn);
-toolbar.appendChild(soBtn);
-toolbar.appendChild(hnBtn);
-
-
-//
-//
-// //  Create Sidebar
-// let resultsDiv = document.createElement("div");
-// resultsDiv.setAttribute('data-as_sitesearch', defaultSite);
-// resultsDiv.className = 'gcse-searchresults-only';
-// resultsDiv.id = 'resultDiv';
-//
-// let sidebar  = document.createElement('div');
-// sidebar.id = 'sidebarContainer';
-// sidebar.style.cssText = ' float:left;\n' +
-//     ' min-width:268px;\n' +
-//     ' display:block;\n' +
-//     ' position:relative;\n' +
-//     ' padding-bottom:15px;\n' +
-//     ' margin-left:892px;\n' +
-//     ' padding-right:10px';
-//
-// sidebar.appendChild(resultsDiv);
-//
-//
-// let rhs = document.getElementById('rhs');
-// let mainDiv = document.getElementById('rcnt');
-//
-//
-//
-// if (rhs) {
-//     sidebar.style.display = 'none';
-//     mainDiv.insertBefore(sidebar,rhs);
-// } else {
-//     mainDiv.insertBefore(sidebar,mainDiv.childNodes[1]);
-// }
-
-
-function toggleSidebar(selectedSite) {
+function toggleSidebar(evt) {
+    let selectedSite = evt.currentTarget.dataset.engineurl;
     if(selectedSite === currentSite) {
         if(sidebar.style.display === 'none') {
             if (rhs) rhs.style.display = 'none';
@@ -121,3 +69,72 @@ function regenerateResults(selectedSite) {
     document.getElementById('sidebarContainer').appendChild(newResultDiv);
     reload_GoogleScript();
 }
+
+function regenerateButtons() {
+    let toolbar = document.getElementById('hdtb-msb');
+    // Remove any existing toolbar
+    let btnDiv = toolbar.querySelector('#btnDiv');
+    if(btnDiv !== null) {
+        btnDiv.remove();
+    }
+    btnDiv = document.createElement('div');
+    btnDiv.id = 'btnDiv';
+    btnDiv.style.paddingLeft = '163px';
+    btnDiv.style.display = 'flex';
+
+    for (let i = 0; i < engineList.length; i++) {
+        console.log('Making buttons, eatin ass....')
+        let btn = document.createElement("div");
+        btn.id = 'btn_' + engineList[i][0];
+        btn.innerHTML = engineList[i][0];
+        btn.setAttribute('data-engineURL', engineList[i][1]);
+        btn.style.paddingLeft = '12px';
+        btn.addEventListener("click", toggleSidebar, false);
+        btnDiv.appendChild(btn);
+    }
+    toolbar.appendChild(btnDiv);
+}
+
+function restoreButtonOptions() {
+
+    function setButtonList(result) {
+        result = result.savedEngines;
+        // If there is a saved dict, use that as the engine List that will be generated
+        if(result && result.length > 0) {
+            engineList = result;
+        }
+        regenerateButtons();
+    }
+
+    function onError(error) {
+        console.log(`Error: ${error}`);
+    }
+
+    let getting = browser.storage.sync.get("savedEngines");
+    getting.then(setButtonList, onError);
+}
+
+let engineList = [
+    ['Reddit', 'https://reddit.com'],
+    ['StackOverflow', 'https://stackoverflow.com'],
+    ['HackerNews', 'https://news.ycombinator.com']
+]
+
+reload_GoogleScript();
+restoreButtonOptions();
+let defaultSite = engineList[0][1];
+let currentSite = defaultSite;
+
+sidebar  = document.createElement('div');
+let rhs = document.getElementById('rhs');
+let mainDiv = document.getElementById('rcnt');
+
+createSidebar();
+
+if (rhs) {
+    sidebar.style.display = 'none';
+    mainDiv.insertBefore(sidebar,rhs);
+} else {
+    mainDiv.insertBefore(sidebar,mainDiv.childNodes[1]);
+}
+
