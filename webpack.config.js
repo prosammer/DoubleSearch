@@ -41,7 +41,7 @@ const getExtensionFileType = (browser) => {
 };
 
 module.exports = {
-  devtool: false, // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
+  devtool: 'inline-module-source-map', // https://github.com/webpack/webpack/issues/1194#issuecomment-560382342
   mode: nodeEnv,
 
   stats: {
@@ -133,7 +133,7 @@ module.exports = {
     // Generate manifest.json
     new WextManifestWebpackPlugin(),
     // Generate sourcemaps
-    new webpack.SourceMapDevToolPlugin({filename: false}),
+    // new webpack.SourceMapDevToolPlugin({filename: false}),
     new webpack.EnvironmentPlugin(['NODE_ENV', 'TARGET_BROWSER']),
     new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
