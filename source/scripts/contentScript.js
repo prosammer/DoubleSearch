@@ -23,7 +23,6 @@ let currentSite = defaultSite;
 
 reload_GoogleScript();
 
-//    Create Reddit results div
 let redditBtn = document.createElement("div");
 redditBtn.id = 'redditBtn';
 redditBtn.innerHTML = 'Reddit';
@@ -32,7 +31,6 @@ redditBtn.addEventListener("click", function() {
     toggleSidebar("https://reddit.com");
 });
 
-//    Create SO results div
 let soBtn = document.createElement("div");
 soBtn.id = 'soBtn';
 soBtn.innerHTML = "StackOverflow";
@@ -41,7 +39,6 @@ soBtn.addEventListener("click", function() {
     toggleSidebar("https://stackoverflow.com");
 });
 
-//    Create SO results div
 let hnBtn = document.createElement("div");
 hnBtn.id = 'hnBtn';
 hnBtn.innerHTML = "HackerNews";
@@ -58,38 +55,38 @@ toolbar.appendChild(soBtn);
 toolbar.appendChild(hnBtn);
 
 
-
-
-//  Create Sidebar
-let resultsDiv = document.createElement("div");
-resultsDiv.setAttribute('data-as_sitesearch', defaultSite);
-resultsDiv.className = 'gcse-searchresults-only';
-resultsDiv.id = 'resultDiv';
-
-let sidebar  = document.createElement('div');
-sidebar.id = 'sidebarContainer';
-sidebar.style.cssText = ' float:left;\n' +
-    ' min-width:268px;\n' +
-    ' display:block;\n' +
-    ' position:relative;\n' +
-    ' padding-bottom:15px;\n' +
-    ' margin-left:892px;\n' +
-    ' padding-right:10px';
-
-sidebar.appendChild(resultsDiv);
-
-
-let rhs = document.getElementById('rhs');
-let mainDiv = document.getElementById('rcnt');
-
-
-
-if (rhs) {
-    sidebar.style.display = 'none';
-    mainDiv.insertBefore(sidebar,rhs);
-} else {
-    mainDiv.insertBefore(sidebar,mainDiv.childNodes[1]);
-}
+//
+//
+// //  Create Sidebar
+// let resultsDiv = document.createElement("div");
+// resultsDiv.setAttribute('data-as_sitesearch', defaultSite);
+// resultsDiv.className = 'gcse-searchresults-only';
+// resultsDiv.id = 'resultDiv';
+//
+// let sidebar  = document.createElement('div');
+// sidebar.id = 'sidebarContainer';
+// sidebar.style.cssText = ' float:left;\n' +
+//     ' min-width:268px;\n' +
+//     ' display:block;\n' +
+//     ' position:relative;\n' +
+//     ' padding-bottom:15px;\n' +
+//     ' margin-left:892px;\n' +
+//     ' padding-right:10px';
+//
+// sidebar.appendChild(resultsDiv);
+//
+//
+// let rhs = document.getElementById('rhs');
+// let mainDiv = document.getElementById('rcnt');
+//
+//
+//
+// if (rhs) {
+//     sidebar.style.display = 'none';
+//     mainDiv.insertBefore(sidebar,rhs);
+// } else {
+//     mainDiv.insertBefore(sidebar,mainDiv.childNodes[1]);
+// }
 
 
 function toggleSidebar(selectedSite) {
