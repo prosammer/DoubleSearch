@@ -2,32 +2,14 @@
 @import "base/reset";
 @import "base/variables";
 
-body {
-  color: $black;
-  background-color: $greyWhite;
+html {
+  min-height: 200px;
 }
-
 h2 {
+  padding-top: 2vh;
   font-size: 25px;
   text-align: center;
 }
-
-
-#options__button {
-  width: 50%;
-  background: green;
-  color: white;
-  font-weight: 500;
-  border-radius: 15px;
-  padding: 5px 10px;
-  justify-content: center;
-  margin: 20px auto;
-  cursor: pointer;
-  opacity: 0.8;
-  display: flex;
-}
-
-
 
 .engineInput {
   padding: 3px 10px;
@@ -39,27 +21,17 @@ h2 {
   display: flex;
   flex-direction: row;
   flex-grow: 2;
+  padding: 5px;
 }
 
 .URLInput {
-  width: 60%;
-}
-
-
-#popup {
-  min-width: 500px;
-  padding: 80px 20px;
-}
-
-.minusIconContainer {
-  display: flex;
-  align-items: stretch;
+  width: 50%;
 }
 
 .minusButton {
-  margin-top: auto;
-  margin-bottom: auto;
-  display: block;
+  font-size: 4vh;
+  line-height: 42px;
+  height: 100%;
 }
 
 #addButtonContainer {
@@ -70,19 +42,10 @@ h2 {
   flex-grow: 2;
 }
 
-#plusButton {
+#addButton {
   align-self: end;
-}
-
-button {
-  width: 25%;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: dodgerblue;
-  border-radius: 10px;
-  height: 8vh;
-  color: white;
-
+  padding: 10px;
+  font-size: 5vw;
 }
 
 

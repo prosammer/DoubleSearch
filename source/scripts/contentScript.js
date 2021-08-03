@@ -83,7 +83,6 @@ function regenerateButtons() {
     btnDiv.style.display = 'flex';
 
     for (let i = 0; i < engineList.length; i++) {
-        console.log('Making buttons, eatin ass....')
         let btn = document.createElement("div");
         btn.id = 'btn_' + engineList[i][0];
         btn.innerHTML = engineList[i][0];

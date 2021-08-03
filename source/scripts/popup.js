@@ -4,38 +4,37 @@ import '../styles/popup.scss';
  * Temporary workaround for secondary monitors on MacOS where redraws don't happen
  * @See https://bugs.chromium.org/p/chromium/issues/detail?id=971701
  */
-// if (
-//     // From testing the following conditions seem to indicate that the popup was opened on a secondary monitor
-//     window.screenLeft < 0 ||
-//     window.screenTop < 0 ||
-//     window.screenLeft > window.screen.width ||
-//     window.screenTop > window.screen.height
-// ) {
-//     chrome.runtime.getPlatformInfo(function (info) {
-//         if (info.os === 'mac') {
-//             const fontFaceSheet = new CSSStyleSheet()
-//             fontFaceSheet.insertRule(`
-//         @keyframes redraw {
-//           0% {
-//             opacity: 1;
-//           }
-//           100% {
-//             opacity: .99;
-//           }
-//         }
-//       `)
-//             fontFaceSheet.insertRule(`
-//         html {
-//           animation: redraw 1s linear infinite;
-//         }
-//       `)
-//             document.adoptedStyleSheets = [
-//                 ...document.adoptedStyleSheets,
-//                 fontFaceSheet,
-//             ]
-//         }
-//     })
-// }
+if (
+    window.screenLeft < 0 ||
+    window.screenTop < 0 ||
+    window.screenLeft > window.screen.width ||
+    window.screenTop > window.screen.height
+) {
+    browser.runtime.getPlatformInfo(function (info) {
+        if (info.os === 'mac') {
+            const fontFaceSheet = new CSSStyleSheet()
+            fontFaceSheet.insertRule(`
+        @keyframes redraw {
+          0% {
+            opacity: 1;
+          }
+          100% {
+            opacity: .99;
+          }
+        }
+      `)
+            fontFaceSheet.insertRule(`
+        html {
+          animation: redraw 1s linear infinite;
+        }
+      `)
+            document.adoptedStyleSheets = [
+                ...document.adoptedStyleSheets,
+                fontFaceSheet,
+            ]
+        }
+    })
+}
 
 
 class Engine {
@@ -51,9 +50,9 @@ class Engine {
         this.minusIconContainer.addEventListener('click', function () {deleteEngineFromArray(engineName)});
         this.engineDiv.appendChild(this.minusIconContainer);
 
-        this.minusIcon = document.createElement('span');
-        this.minusIcon.innerHTML = '&#8854;';
-        this.minusIcon.style.fontSize = '4vh';
+        this.minusIcon = document.createElement('div');
+        this.minusIcon.className = 'minusButton';
+        this.minusIcon.innerHTML = '&#x2716;';
         this.minusIconContainer.appendChild(this.minusIcon);
 
         this.nameInput = document.createElement('input');
@@ -165,7 +164,7 @@ function addOtherElements() {
 
     let addButtonIcon = document.createElement('span');
     addButtonIcon.innerHTML = '&#8853;';
-    addButtonIcon.style.fontSize = '5vh';
+    addButtonIcon.id = 'addButton';
     addButtonIcon.addEventListener('click', function () {addEngineToArray()});
 
     addButtonContainer.appendChild(addButtonIcon);
