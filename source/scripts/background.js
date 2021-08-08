@@ -1,4 +1,5 @@
 import 'emoji-log';
+import ExtPay from 'extpay';
 import browser from 'webextension-polyfill';
 
 browser.runtime.onInstalled.addListener(() => {
@@ -12,3 +13,7 @@ browser.runtime.onMessage.addListener((_request, _sender, _sendResponse) => {
   // And respond back to the sender.
   return Promise.resolve('got your message, thanks!');
 });
+
+const extpay = ExtPay('sample-extension');
+
+console.log(extpay);
