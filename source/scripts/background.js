@@ -14,6 +14,4 @@ browser.runtime.onMessage.addListener((_request, _sender, _sendResponse) => {
   return Promise.resolve('got your message, thanks!');
 });
 
-const extpay = ExtPay('sample-extension');
-
-console.log(extpay);
+const extpay = ExtPay('doublesearch');

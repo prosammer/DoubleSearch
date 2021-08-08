@@ -1,4 +1,5 @@
 import '../styles/popup.scss';
+import ExtPay from "extpay";
 
 /**
  * Temporary workaround for secondary monitors on MacOS where redraws don't happen
@@ -170,6 +171,43 @@ function addOtherElements() {
     addButtonContainer.appendChild(addButtonIcon);
 
 }
+
+let payNowButton = document.createElement('button');
+payNowButton.innerHTML = 'Purchase Premium';
+payNowButton.id = 'payNowButton';
+payNowButton.onclick = payNow;
+
+
+const extpay = ExtPay('doublesearch');
+extpay.getUser().then(user => {
+    console.log(user);
+    if (user.paid) {
+        console.log('User is Premium');
+        let premiumText = document.createElement('h4');
+        premiumText.id = 'premiumText';
+        premiumText.innerHTML = 'Premium';
+        premiumText.style.fontStyle = 'italic';
+        premiumText.style.color = 'gold';
+        premiumText.style.width = '100%';
+        premiumText.style.textAlign = 'center';
+        document.getElementsByTagName('header')[0].appendChild(premiumText);
+    } else {
+        console.log('User is Free');
+        document.getElementsByTagName('footer')[0].appendChild(payNowButton);
+    }
+}).catch((error) => {
+    console.error(error);
+});
+
+extpay.onPaid.addListener(user => {
+    console.log('user paid!')
+
+})
+
+function payNow() {
+    extpay.openPaymentPage();
+}
+
 
 const form = document.getElementById('popup');
 let engineList = [
