@@ -61,7 +61,9 @@ class Engine {
         this.nameInput.setAttribute('id', this.engineName);
         this.nameInput.setAttribute('class','engineInput');
         this.nameInput.setAttribute('value',this.engineName);
-        this.nameInput.addEventListener('change',submitChangesToArray, false);
+        if(showPremium) {
+            this.nameInput.addEventListener('change',submitChangesToArray, false);
+        }
 
         this.engineDiv.appendChild(this.nameInput);
 
@@ -69,7 +71,9 @@ class Engine {
         this.URLInput.setAttribute('id', this.engineURL);
         this.URLInput.setAttribute('class','engineInput URLInput');
         this.URLInput.setAttribute('value',this.engineURL);
-        this.URLInput.addEventListener('change',submitChangesToArray, false);
+        if(showPremium) {
+            this.URLInput.addEventListener('change',submitChangesToArray, false);
+        }
         this.engineDiv.appendChild(this.URLInput);
 
     }
@@ -115,7 +119,7 @@ function regenerateEngineArrayDivs() {
 
 function deleteEngineFromArray(engineName) {
     for (let i = 0; i < engineList.length; i++) {
-        if(engineList[i][0] === engineName) {
+        if(engineList[i][0] === engineName && engineList.length > 1) {
             console.log('Removing engineName:' + engineName + ' from engineList');
             engineList.splice(i,1);
         }
@@ -166,8 +170,9 @@ function addOtherElements() {
     let addButtonIcon = document.createElement('span');
     addButtonIcon.innerHTML = '&#8853;';
     addButtonIcon.id = 'addButton';
-    addButtonIcon.addEventListener('click', function () {addEngineToArray()});
-
+    if(showPremium) {
+        addButtonIcon.addEventListener('click', function () {addEngineToArray()});
+    }
     addButtonContainer.appendChild(addButtonIcon);
 
 }
@@ -181,20 +186,20 @@ payNowButton.onclick = payNow;
 const extpay = ExtPay('doublesearch');
 extpay.getUser().then(user => {
     console.log(user);
-    if (user.paid) {
-        console.log('User is Premium');
-        let premiumText = document.createElement('h4');
-        premiumText.id = 'premiumText';
-        premiumText.innerHTML = 'Premium';
-        premiumText.style.fontStyle = 'italic';
-        premiumText.style.color = 'gold';
-        premiumText.style.width = '100%';
-        premiumText.style.textAlign = 'center';
-        document.getElementsByTagName('header')[0].appendChild(premiumText);
-    } else {
-        console.log('User is Free');
-        document.getElementsByTagName('footer')[0].appendChild(payNowButton);
-    }
+    const now = new Date();
+    const fourteenDays = 1000*60*60*24*14 // in milliseconds
+
+    // showPremiumPage();
+    showFreePage()
+
+    // if(user.trialStartedAt === null) {
+    //     extpay.openTrialPage('14 day');
+    // }
+    // if (user.trialStartedAt && (now - user.trialStartedAt) < fourteenDays || user.paid) {
+    //     showPremium = true;
+    // } else {
+    //     showPremium = false;
+    // }
 }).catch((error) => {
     console.error(error);
 });
@@ -208,7 +213,6 @@ function payNow() {
     extpay.openPaymentPage();
 }
 
-
 const form = document.getElementById('popup');
 let engineList = [
     ['Reddit', 'https://reddit.com'],
@@ -216,5 +220,16 @@ let engineList = [
     ['HackerNews', 'https://news.ycombinator.com']
 ]
 
+let showPremium = false;
+
 document.addEventListener("DOMContentLoaded", restoreEngineOptions);
 addOtherElements();
+// extpay.openPaymentPage();
+
+if(showPremium) {
+    let premiumHeader = document.createElement('h4');
+    premiumHeader.innerHTML = 'Premium';
+    premiumHeader.id = 'premiumHeader';
+    document.getElementsByTagName('h2')[0].appendChild(premiumHeader);
+}
+

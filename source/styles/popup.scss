@@ -48,7 +48,16 @@ h2 {
   font-size: 5vw;
 }
 
+.grayout {
+  opacity: 0.6; /* Real browsers */
+  filter: alpha(opacity = 60); /* MSIE */
+}
 
+#premiumHeader {
+  color: gold;
+  font-style: italic;
+  font-family: Didot;
+}
 
 
 
